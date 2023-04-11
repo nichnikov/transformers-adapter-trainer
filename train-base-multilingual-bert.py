@@ -1,12 +1,14 @@
 """
 """
 import os
+import json
 import numpy as np
 from datasets import DatasetDict
-from transformers import (
-                          BertTokenizer, 
-                          BertModelWithHeads)
-from transformers import TrainingArguments, AdapterTrainer, EvalPrediction
+from transformers import (BertTokenizer, 
+                          BertModelWithHeads,
+                          TrainingArguments, 
+                          AdapterTrainer, 
+                          EvalPrediction)
 
 model_name = "bert-base-multilingual-cased"
 adapter_name = "nli_adapter"
@@ -41,13 +43,17 @@ model.add_classification_head(adapter_name, num_labels=2)
 model.train_adapter(adapter_name)
 
 
+with open(os.path.join("data", "config.json"), "r") as f:
+  prmtrs = json.load(f)
+
+
 training_args = TrainingArguments(
     learning_rate=1e-4,
     num_train_epochs=15,
-    per_device_train_batch_size=32,
-    per_device_eval_batch_size=32,
-    logging_steps=200,
-    save_steps=1000,
+    per_device_train_batch_size=prmtrs["batch_size"],
+    per_device_eval_batch_size=prmtrs["batch_size"],
+    logging_steps=prmtrs["logging_steps"],
+    save_steps=prmtrs["save_steps"],
     output_dir="./training_output",
     overwrite_output_dir=True,
     # The next line is important to ensure the dataset labels are properly passed to the model
