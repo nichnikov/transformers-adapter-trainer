@@ -29,7 +29,7 @@ def compute_accuracy(p: EvalPrediction):
   return {"acc": (preds == p.label_ids).mean()}
 
 
-dataset = DatasetDict.load_from_disk(os.path.join("data", "datasets.huggingface"))
+dataset = DatasetDict.load_from_disk(os.path.join("data", "datasets_tiny.huggingface"))
 print(dataset)
 
 dataset = dataset.map(encode_batch, batched=True)
