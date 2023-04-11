@@ -1,0 +1,6 @@
+{
+"epochs": 15,
+"batch_size": 32,
+"logging_steps": 200,
+"save_steps": 1000
+}
