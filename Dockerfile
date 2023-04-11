@@ -15,4 +15,4 @@ RUN pip install --proxy=http://proxy.dev.aservices.tech:8080 --upgrade pip
 RUN pip install --proxy=http://proxy.dev.aservices.tech:8080 -r requirements.txt
 
 # run the command
-CMD ["python", "./app.py"]
+CMD ["python", "./train-base-multilingual-bert.py"]
